@@ -25,6 +25,8 @@ import Unicode
 import CNCRibbon
 from Sender import ERROR_CODES
 from CNC import WCS, DISTANCE_MODE, FEED_MODE, UNITS, PLANE
+#to detect strange call of moveXdown() when dragging view area:
+import traceback
 
 _LOWSTEP   = 0.0001
 _HIGHSTEP  = 1000.0
@@ -642,6 +644,8 @@ class ControlFrame(CNCRibbon.PageLabelFrame):
 
 	def moveXdown(self, event=None):
 		if event is not None and not self.acceptKey(): return
+		print event
+		traceback.print_stack()
 		self.sendGCode("G91G0X-%s"%(self.step.get()))
 		self.sendGCode("G90")
 
